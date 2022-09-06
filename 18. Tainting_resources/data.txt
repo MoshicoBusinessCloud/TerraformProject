@@ -1,0 +1,64 @@
+Terraform Taint:
+
+You have created a new resource via terraform
+
+users have made a lot of changes (both infra and inside the server)
+
+two ways to deal with this: Import the changes to terraform /delete & recreate the resource
+
+terraform taint command manually marks a terraform managed resource as tainted , forcing it to be destroyed and recretad on next apply
+
+terraform taint aws_instance.test
+
+###################################################################################################################################
+
+senario
+
+# --When you create a resource in terraform, there is a state file that is generated 
+# --that holds the details of that resource. 
+# --For example, if you create an EC2 Instance with instance_type of t2.micro in terraform, 
+# --the state file will also have t2.micro as the instance_type of the instance. if you stop 
+# --and change the instance_type in the console to t2.midium, that change doesn't automatically 
+# --change what is on the statefile. To make the change reflect on the statefile you have to run 
+# --terraform refresh for the change on the console to be in sync and updated with the statefile but 
+# --you have to manually make the change on you block of code.
+
+
+#=========FIRST-SENARIO===============#
+# The tfstate have t2.micro
+# Your code block have t2.micro
+# The instance_type was change in the console to t2.midium
+# You run terraform refresh command to update statefile to t2.midium
+
+--> someone went to aws console and changed the instance type to : t2.medium  (changed in an emergency) 
+
+terraform refresh # --you run this command when you need to sync the changes made on the console with the statefile.
+
+terraform taint aws_instance.test
+
+tfstate : t2.medium
+change code in terraform
+
+
+
+#=========SECOND-SENARIO===============#
+# The tfstate have t2.micro
+# Your code block have t2.micro
+# The instance_type was change in the console to t2.midium
+# # after the emergency change, you deside you would like to go back to t2.micro
+
+Run this command -->>[terraform taint aws_instance.test] and the resource will be mark as tainted.
+# --This is because when you do a modificatin on an instance such as instance_type, the old instance 
+# --is terminated and a new one will be created with the upgraded changes
+
+
+--> aws console : t3.medium
+
+tf taint on above ec2 resource
+
+tf plan / apply
+
+ec2 t3.medium resource get killed and recreate with resource match config from tfstate
+
+--> terraform : t2.micro
+

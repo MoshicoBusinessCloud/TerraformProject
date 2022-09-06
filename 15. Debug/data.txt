@@ -1,0 +1,25 @@
+TF_LOG --> TRACE, DEBUG, INFO, WARN or ERROR  These actions can be use to based on the usecase
+
+Mac # --This two lines of code below are use when are using a Mac PC
+
+export TF_LOG=DEBUG
+
+export TF_LOG_PATH=debug.log
+
+Windows PowerShell  # --This two lines of code below are use when are using a Windows PC
+
+$env:TF_LOG="TRACE" # --This use to trace error in your code
+$env:TF_LOG_PATH="C:\tmp\terraform.log" # --This use to trace error in your code
+
+
+#############
+
+terraform fmt # --terrafprm fmt is used to organize and structure according to terraform code standard
+
+############
+
+terraform validate # --terraform validate is use to validate your code to make sure your code is configured properly
+
+############
+
+/Users/avinashmamidi/Documents/work/JJTech-Reinvent-Batch/Terraform/variables/

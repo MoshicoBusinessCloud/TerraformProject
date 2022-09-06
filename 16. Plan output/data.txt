@@ -1,0 +1,15 @@
+# --These set of commands are use to save terraform sctivities carried out in your environment.
+# --When you do terraform plan, apply, or destroy, you can use these commands to save the print 
+# --out as a record for the activities that take place in your environment.
+
+
+
+
+terraform apply "plan.log"   # --you run this command when you are doing terraform apply and it will 
+# --create a semi readable file in your folder
+
+terraform plan --out=plan.log    # --This is use to save terraform plan print 
+# --out and it is use as input for terraform apply
+
+terraform plan | tee plan.log   # --you run this command when you are doing terraform plan, apply, destroy and it will 
+# --create a semi readable file in your folder
